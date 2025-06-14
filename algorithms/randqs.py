@@ -15,7 +15,7 @@ This is one of the more intuitive Proof's of correctness
 
 from random import randint
 
-def randqs_helper(array, pivot_index):
+def randqs_helper(array: list, pivot_index: int):
     # Base Case
     if (len(array) <= 1):
         return array
@@ -50,7 +50,7 @@ def randqs_helper(array, pivot_index):
     return left_sorted + right_sorted
 
 
-def randqs(array):
+def randqs(array: list):
     # Also need to handle singletons in the main implementation
     if len(array) <= 1:
         return array
