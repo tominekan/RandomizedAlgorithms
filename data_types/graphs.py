@@ -8,7 +8,8 @@ For implementation purposes, I'm going to use a dictionary to represent each ver
 I'll also note any changes in runtime that this might cause. Also will be adding functionality as we go on.
 
 NOTE: A FASTER IMPLEMENTATION CAN BE DONE BY ALSO KEEPING TRACK OF THE BOTH IN AND OUTGOING VERTICES
-but I'm still not sure how much more helpful it might be considering space.
+but I'm still not sure how much more helpful it might be considering space. In addition, I already implemented this
+and I kinda don't want to make any changes here.
 
 """
 
@@ -133,8 +134,8 @@ class Graph:
 
         if vertex in self.adj_list:
             # Remove all vertices pointing to `vertex`
-            for key in self.adj_list.keys():
-                num_vertex = self.adj_list[key].remove_all(vertex)
+            for v in self.adj_list.keys():
+                num_vertex = self.adj_list[v].remove_all(vertex)
                 self.num_edges -= num_vertex
 
             self.num_edges -= len(self.adj_list[vertex])
@@ -157,3 +158,28 @@ class Graph:
         else:
             raise Exception(f"{vertex} does not exist in the graph")
     
+    def replace_vertex(self, vertex, new_v):
+        """
+        Replaces all edges pointing to and from `vertex` with `new_v`.
+
+        NOTE: THIS IS MORE COMPLICATED BECAUSE NOW WE HAVE TO ALSO CONSIDER THAT WE NEED TO DELETE THE KEY
+        THE VERTEX REPRESENTS, AND REPLACE IT WITH `new_v`
+        ---
+        O(|V| + |E|)
+        """
+    
+        if vertex in self.adj_list:
+            # Replaces all vertices pointing to `vertex`
+            for v in self.adj_list.keys():
+                self.adj_list[v].replace_all(vertex, new_v)
+            
+            # Removes that specific vertex from the list of keys
+            outgoing_edges = self.adj_list.pop(vertex, None)
+            if (new_v in self.adj_list):
+                # if the vertex already exists, we just add on the new outgoing edges
+                pass
+            else:
+                self.adj_list[new_v] = outgoing_edges
+
+        else:
+            raise Exception(f"{vertex} does not exist in the graph.")

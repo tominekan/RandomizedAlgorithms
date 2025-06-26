@@ -230,6 +230,54 @@ class LinkedList:
                 curr = curr.next
         
         return num_instances
+    
+    def join(self, other):
+        """
+        Joins this Linked List with `other`. `other` is added to the tail of this Linked List. 
+        These lists will now be synonymous with each other
+
+        ---
+        O(1)
+        """
+
+        # Join the head of `other` with the tail of this Linked List
+        other.head.prev = self.tail
+        self.tail.next = other.head
+
+        # Update the heads and tails of the linked lis
+        self.tail = other.tail
+        other.head = self.head
+        
+        # Update the Lengths
+        self.length += other.length
+        other.length = self.length
+
+
+    
+    def replace_all(self, value, new_value):
+        """
+        Replaces all instances of `value` in the Linked List with `new_value`. 
+        Returns the number of instances of `value`.
+        If the value doesn't exist, do nothing.
+
+        ---
+        O(n)
+        """
+
+        # If we have an empty list do nothing lol
+        if (self.length < 1):
+            raise
+        
+        # Keep removing these values until there's nothing left
+        curr = self.head
+        num_instances = 0
+        while curr is not None:
+            if curr.value == value:
+                curr.value = new_value
+                num_instances += 1
+            curr = curr.next
+        
+        return num_instances
         
     def __len__(self):
         """
@@ -291,26 +339,23 @@ def sample_cases():
     l.add_tail("da")
     print(l)
     l.add_tail("goat")
-    print(l)
-    print(f"New Length: {len(l)}\n")
-
+    print(f"({len(l)} items): {l}")
 
     print("Removing 4 items from linked list ...")
     old_head = l.remove_head()
-    print(l)
+    print(f"({len(l)} items): {l}")
     print(f"Removed Item: {old_head}")
 
     old_tail = l.remove_tail()
-    print(l)
+    print(f"({len(l)} items): {l}")
     print(f"Removed Item: {old_tail}")
-    print(f"New Length: {len(l)}\n")
 
     old_head = l.remove_head()
-    print(l)
+    print(f"({len(l)} items): {l}")
     print(f"Removed Item: {old_head}")
 
     old_head = l.remove_head()
-    print(l)
+    print(f"({len(l)} items): {l}")
     print(f"Removed Item: {old_head}")
 
     print("Peeking Linked List")
@@ -349,4 +394,29 @@ def sample_cases():
     print("Removing all 'dabo'")
     l.remove_all("dabo")
     print(f"({len(l)} items): {l}\n")
+    print("TEST REPLACE_ALL FUNCTION")
+    l.add_head("dabo")
+    l.add_tail("dabo")
+    l.add_head("1")
+    l.add_tail("2")
+    l.add_head("dabo")
+    l.add_head("dabo")
+    l.add_tail("3")
+    l.add_tail("dabo")
+    print(f"({len(l)} items): {l}")
+    l.replace_all("dabo", "lebron")
+    print(f"({len(l)} items): {l}\n")
 
+    m = LinkedList()
+    m.add_tail("UNO")
+    m.add_tail("DOS")
+    m.add_tail("TRES")
+    m.add_tail("QUATRO")
+    l.join(m)
+    print("L CONTENTS:")
+    print(f"({len(l)} items): {l}")
+    print("M CONTENTS:")
+    print(f"({len(m)} items): {m}\n")
+
+
+sample_cases()
