@@ -4,6 +4,5 @@ I'm working through *Randomized Algorithms* by Rajeev Motwani and Prabhakar Ragh
 
 I'm going to try implementing each algorithms in Python and explaining my thoughts on each algorithm in the comments. 
 
-
-## Note:
-I think in order to build my understanding of programming, I might to be switching the algorithms I implement to C.
+## NOTE:
+I might also double back adn implement the algorithms in C too. Who knows?

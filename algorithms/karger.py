@@ -15,7 +15,9 @@ def contract_edge(edge, graph: Graph):
     u = edge[0]
     v = edge[1]
     combined = str(u) + str(v)
+    # Essentially combine the vertex
     graph.replace_vertex(u, combined)
     graph.replace_vertex(v, combined)
 
-    # Now we want to remove any and all self-loops
+    # Remove all self-loops and voila, we have contracted the edge (u,v)
+    graph.remove_edge((combined, combined))

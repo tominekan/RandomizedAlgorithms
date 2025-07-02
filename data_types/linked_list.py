@@ -88,10 +88,10 @@ class LinkedList:
 
         self.length += 1
 
-        if (self.length == 1):
-            self.tail = self.head
-
         self.tail = new_tail
+
+        if (self.length == 1):
+            self.head = self.tail
     
     def remove_tail(self):
         """
@@ -257,7 +257,7 @@ class LinkedList:
     def replace_all(self, value, new_value):
         """
         Replaces all instances of `value` in the Linked List with `new_value`. 
-        Returns the number of instances of `value`.
+        Returns the number of instances of `value` in the Linked List
         If the value doesn't exist, do nothing.
 
         ---
@@ -418,5 +418,3 @@ def sample_cases():
     print("M CONTENTS:")
     print(f"({len(m)} items): {m}\n")
 
-
-sample_cases()

@@ -9,8 +9,11 @@ and honestly it's expected asymptotically matches the version of
 QuickSort using Select, while probably doing much better  
 in actual use cases.
 
-Proof of Correctness:
-This is one of the more intuitive Proof's of correctness
+POC:
+The POC for this relatively simply, all we need to do is find the expected
+number of comparisons the algorithm makes, then we can use an indicator random variables 
+to denote whether any pair of elements are compared in the sorting algorithm. 
+To do this, we need to find the probability of two elements being compared.
 """
 
 from random import randint

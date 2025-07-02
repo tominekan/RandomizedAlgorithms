@@ -10,7 +10,6 @@ I'll also note any changes in runtime that this might cause. Also will be adding
 NOTE: A FASTER IMPLEMENTATION CAN BE DONE BY ALSO KEEPING TRACK OF THE BOTH IN AND OUTGOING VERTICES
 but I'm still not sure how much more helpful it might be considering space. In addition, I already implemented this
 and I kinda don't want to make any changes here.
-
 """
 
 from linked_list import LinkedList
@@ -86,8 +85,8 @@ class Graph:
         """
 
         if (edge[0] in self.adj_list) and (edge[1] in self.adj_list):
-            self.adj_list[edge[0]].remove(edge[1])
-            self.num_edges -= 1
+            num_removed = self.adj_list[edge[0]].remove_all(edge[1])
+            self.num_edges -= num_removed
         else:
             raise Exception(f"{edge} contains a nonexistent vertex")
     
@@ -101,9 +100,9 @@ class Graph:
         """
 
         if (edge[0] in self.adj_list) and (edge[1] in self.adj_list):
-            self.adj_list[edge[0]].remove(edge[1])
-            self.adj_list[edge[1]].remove(edge[0])
-            self.num_edges -= 2
+            forward_edges = self.adj_list[edge[0]].remove_all(edge[1])
+            back_edges = self.adj_list[edge[1]].remove_all(edge[0])
+            self.num_edges -= forward_edges + back_edges
         else:
             raise Exception(f"{edge} contains a nonexistent vertex")
         
@@ -177,7 +176,10 @@ class Graph:
             outgoing_edges = self.adj_list.pop(vertex, None)
             if (new_v in self.adj_list):
                 # if the vertex already exists, we just add on the new outgoing edges
-                pass
+                self.adj_list[new_v].join(outgoing_edges)
+                # We are adding the edges of `vertex` to the already existing vertices in `new_v`
+                # This means we lose one edge overall
+                self.num_vertices -= 1
             else:
                 self.adj_list[new_v] = outgoing_edges
 
